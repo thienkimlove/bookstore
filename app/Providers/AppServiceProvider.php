@@ -14,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->share('site_settings', Setting::lists('value', 'name')->all());
+       // view()->share('site_settings', Setting::lists('value', 'name')->all());
     }
 
     /**
