@@ -6,3 +6,5 @@ _ide_helper.php
 /public/ckeditor
 /public/upload
 /public/files/*
+/public/frontend/images/*
+!/public/frontend/images/five-star.png

@@ -43,6 +43,21 @@
             </div>
 
             <div class="form-group">
+                {!! Form::label('publisher', 'Publisher') !!}
+                {!! Form::text('publisher', null, ['class' => 'form-control']) !!}
+            </div>
+
+            <div class="form-group">
+                {!! Form::label('release_date', 'Release Date') !!}
+                {!! Form::text('release_date', null, ['class' => 'form-control']) !!}
+            </div>
+
+            <div class="form-group">
+                {!! Form::label('pages', 'Pages') !!}
+                {!! Form::text('pages', null, ['class' => 'form-control']) !!}
+            </div>
+
+            <div class="form-group">
                 {!! Form::label('image', 'Image') !!}
                 @if ($post->image)
                     <img src="{{url('img/cache/120x120/' . $post->image)}}" />

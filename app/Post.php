@@ -22,6 +22,9 @@ class Post extends Model implements SluggableInterface
         'slug',
         'desc',
         'content',
+        'publisher',
+        'release_date',
+        'pages',
         'image',
         'status'
     ];

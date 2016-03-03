@@ -12,7 +12,19 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('frontend.index');
+});
+
+Route::get('/detail', function () {
+    return view('frontend.detail');
+});
+
+Route::get('/category', function () {
+    return view('frontend.category');
+});
+
+Route::get('/search', function () {
+    return view('frontend.search');
 });
 
 Route::get('example/composer', function(){
@@ -23,6 +35,10 @@ Route::get('example/paginator', function(){
     $posts = \App\Post::paginate(1);
     //$posts->setPath('custom/url');
     return view('example.paginator', compact('posts'));
+});
+
+Route::get('restricted', function(){
+    return view('errors.restricted');
 });
 
 /*
@@ -39,7 +55,6 @@ Route::get('example/paginator', function(){
 
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
-
     Route::get('/admin', 'HomeController@index');
     Route::resource('admin/posts', 'PostsController');
     Route::resource('admin/categories', 'CategoriesController');

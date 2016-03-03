@@ -34,6 +34,9 @@
                                 <th>Title</th>
                                 <th>Category</th>
                                 <th>Desc</th>
+                                <th>Publisher</th>
+                                <th>Release Date</th>
+                                <th>Pages</th>
                                 <th>Image</th>
                                 <th>Status</th>
                                 <th>Action</th>
@@ -46,6 +49,9 @@
                                     <td>{{$post->title}}</td>
                                     <td>{{$post->category->name}}</td>
                                     <td>{!! str_limit($post->desc, 200) !!}</td>
+                                    <td>{{$post->publisher}}</td>
+                                    <td>{{$post->release_date}}</td>
+                                    <td>{{$post->pages}}</td>
                                     <td><img src="{{url('img/cache/120x120/' . $post->image)}}" /></td>
                                     <td>{{ ($post->status) ? 'Yes' : 'No'  }}</td>
                                     <td>

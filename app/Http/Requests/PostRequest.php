@@ -28,6 +28,9 @@ class PostRequest extends Request
             'category_id' => 'required',
             'desc' => 'required',
             'content' => 'required',
+            'publisher' => 'required',
+            'release_date' => 'required',
+            'pages' => 'required',
             'tag_list' => 'required'
         ];
     }
