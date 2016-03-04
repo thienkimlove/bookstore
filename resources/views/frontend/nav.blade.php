@@ -15,7 +15,7 @@
              @endforeach
             <li id="menu-item-57"
                 class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-57">
-                <a href="http://sciencebasic.com/uncategorized" itemprop="url"><span itemprop="name">More >></span></a>
+                <a href="#" itemprop="url"><span itemprop="name">More >></span></a>
                 <ul class="sub-menu">
                     @foreach ($categories as $category)
                         <li id="menu-item-{{$category->id + 58}}"
