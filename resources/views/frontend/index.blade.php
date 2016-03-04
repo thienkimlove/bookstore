@@ -9,6 +9,15 @@
                 <section id="featured-post-2" class="widget featured-content featuredpost">
                     <div class="widget-wrap">
                         <h4 class="widget-title widgettitle">{{$page_title}}</h4>
+                        <!-- Review -->
+                        <ins class="adsbygoogle"
+                             style="display:block"
+                             data-ad-client="ca-pub-6984203717480217"
+                             data-ad-slot="1810777884"
+                             data-ad-format="auto"></ins>
+                        <script>
+                            (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
                         @foreach ($posts as $post)
                         <article
                                 class="post-{{$post->id}} post type-post status-publish format-standard has-post-thumbnail category-general pmpro-has-access entry">
@@ -64,6 +73,15 @@
                             </header>
                         </article>
                         @endforeach
+                                <!-- Review -->
+                            <ins class="adsbygoogle"
+                                 style="display:block"
+                                 data-ad-client="ca-pub-6984203717480217"
+                                 data-ad-slot="1810777884"
+                                 data-ad-format="auto"></ins>
+                            <script>
+                                (adsbygoogle = window.adsbygoogle || []).push({});
+                            </script>
                     </div>
                 </section>
             </div>

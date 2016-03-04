@@ -65,7 +65,7 @@
 </div>
 
 <script type="text/javascript" src="{{url('frontend/js/wp-embed.js')}}"></script>
-
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
 </body>
 </html>

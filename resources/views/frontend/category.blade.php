@@ -16,6 +16,15 @@
                     </span> <span aria-label="breadcrumb separator">/</span>
                    {{$category->name}}
                 </div>
+                <!-- Review -->
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-6984203717480217"
+                     data-ad-slot="1810777884"
+                     data-ad-format="auto"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
                 @foreach ($posts as $post)
                 <article
                         class="post-{{$post->id}} post type-post status-publish format-standard has-post-thumbnail category-anatomy category-biochemistry category-general category-genetics category-histology category-immunology category-uncategorized category-microbiology category-pathology category-pathophysiology category-physiology pmpro-has-access entry"
