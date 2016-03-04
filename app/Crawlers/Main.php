@@ -19,7 +19,7 @@ use Carbon\Carbon;
 use Symfony\Component\DomCrawler\Crawler;
 
 
-class MainCrawler {
+class Main {
 
     /**
      * save image to public.
@@ -51,13 +51,13 @@ class MainCrawler {
      * @param bool $redirect
      * @return string
      */
-    public static function crawlerLink($link, $redirect = false)
+    public static function crawlerLink($link)
     {
         set_time_limit(0);
-        $client = new Client();
+
         try {
-            $request = $client->createRequest('GET', $link, ['allow_redirects' => $redirect]);
-            $response = $client->send($request);
+            $client = new Client();
+            $response = $client->request('GET', $link);
             if ($response->getStatusCode() == '200') {
                 return $response->getBody()->getContents();
             }

@@ -10,6 +10,8 @@ class Category extends Model implements SluggableInterface
 {
     use SluggableTrait;
 
+    protected $times = ['update_at', 'created_at'];
+
     protected $sluggable = array(
         'build_from' => 'name',
         'save_to'    => 'slug',

@@ -30,8 +30,7 @@ class PostRequest extends Request
             'content' => 'required',
             'publisher' => 'required',
             'release_date' => 'required',
-            'pages' => 'required',
-            'tag_list' => 'required'
+            'pages' => 'required'
         ];
     }
 }

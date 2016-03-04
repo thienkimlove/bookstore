@@ -11,20 +11,22 @@
 |
 */
 
-Route::get('/', function () {
-    return view('frontend.index');
-});
 
-Route::get('/detail', function () {
-    return view('frontend.detail');
-});
+Route::get('/', function (\Illuminate\Http\Request $request) {
 
-Route::get('/category', function () {
-    return view('frontend.category');
-});
-
-Route::get('/search', function () {
-    return view('frontend.search');
+    if ($request->input('s')) {
+        $page_title = 'Search with keyword : '.$request->input('s');
+        $posts = \App\Post::latest()->where('title', 'LIKE', '%'.$request->input('s').'%')->paginate(20);
+    } else {
+        $page_title = 'New Books';
+        $posts = \App\Post::latest()->limit(20)->get();
+    }
+    $randomPosts = \App\Post::all()->random(4);
+    return view('frontend.index', compact('posts', 'randomPosts', 'page_title'))->with([
+        'meta_title' => ($request->input('s'))? 'Search with keyword : '.$request->input('s') .' | '.env('SITE_NAME') : 'Free Download Medical Books'.' | '.env('SITE_NAME'),
+        'meta_desc' => 'download free ebook, download ebooks, download free, ebook Pathology, ebook Pathophysiology, ebook, Physiology, ebook Histology, ebook Immunology, ebook Microbiology, download ebook anatomy, ebook Biochemistry, ebook Genetics,',
+        'meta_url' => ($request->input('s')) ? url('/s='.$request->input('s')) : url('/')
+    ]);
 });
 
 Route::get('example/composer', function(){
@@ -40,6 +42,8 @@ Route::get('example/paginator', function(){
 Route::get('restricted', function(){
     return view('errors.restricted');
 });
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -60,3 +64,36 @@ Route::group(['middleware' => 'web'], function () {
     Route::resource('admin/categories', 'CategoriesController');
     Route::resource('admin/settings', 'SettingsController');
 });
+
+
+Route::get('{value}', function ($value) {
+    if (preg_match('/([a-z0-9\-]+)\.html/', $value, $matches)) {
+
+        $post = \App\Post::where('slug', $matches[1])->first();
+        $relatedPosts =  \App\Post::where('status', true)
+            ->where('category_id', $post->category->id)
+            ->limit(10)->get();
+
+        return view('frontend.detail', compact('post', 'relatedPosts'))->with([
+            'meta_title' => $post->title . ' | '.env('SITE_NAME'),
+            'meta_desc' => $post->desc,
+            'meta_url' => url($post->slug.'.html')
+        ]);
+    } else {
+
+        $category = \App\Category::where('slug', $value)->first();
+
+        $posts = \App\Post::where('status', true)
+            ->where('category_id', $category->id)
+            ->paginate(20);
+
+        return view('frontend.category', compact(
+            'category', 'page', 'topPosts', 'posts'
+        ))->with([
+            'meta_title' => $category->name.' | '.env('SITE_NAME'),
+            'meta_desc' => $category->name,
+            'meta_url' => url($category->slug)
+        ]);
+    }
+});
+

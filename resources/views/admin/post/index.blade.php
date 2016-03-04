@@ -33,11 +33,16 @@
                                 <th>#</th>
                                 <th>Title</th>
                                 <th>Category</th>
+                                <th>IBSN</th>
                                 <th>Desc</th>
                                 <th>Publisher</th>
                                 <th>Release Date</th>
                                 <th>Pages</th>
                                 <th>Image</th>
+                                <th>Feature</th>
+                                <th>Recent</th>
+                                <th>Preview Link</th>
+                                <th>Author</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -48,11 +53,16 @@
                                     <td>{{$post->id}}</td>
                                     <td>{{$post->title}}</td>
                                     <td>{{$post->category->name}}</td>
+                                    <td>{{$post->ibsn}}</td>
                                     <td>{!! str_limit($post->desc, 200) !!}</td>
                                     <td>{{$post->publisher}}</td>
                                     <td>{{$post->release_date}}</td>
                                     <td>{{$post->pages}}</td>
-                                    <td><img src="{{url('img/cache/120x120/' . $post->image)}}" /></td>
+                                    <td><img src="{{$post->image}}" /></td>
+                                    <td>{{ ($post->feature) ? 'Yes' : 'No'  }}</td>
+                                    <td>{{ ($post->recent) ? 'Yes' : 'No'  }}</td>
+                                    <td>{{$post->preview}}</td>
+                                    <td>{{$post->author}}</td>
                                     <td>{{ ($post->status) ? 'Yes' : 'No'  }}</td>
                                     <td>
                                         <button id-attr="{{$post->id}}" class="btn btn-primary btn-sm edit-post" type="button">Edit</button>&nbsp;

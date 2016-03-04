@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Category;
 use App\Post;
 use Illuminate\Support\ServiceProvider;
 
@@ -26,6 +27,13 @@ class ViewComposerProvider extends ServiceProvider
 
         view()->composer('example.composer', function ($view) {
             $view->with('latestPosts',  Post::latest()->limit(6)->get());
+        });
+        view()->composer('frontend.nav', function ($view) {
+            $view->with('categories',  Category::all());
+        });
+
+        view()->composer('frontend.aside', function ($view) {
+            $view->with('recentPosts',  Post::where('recent', true)->limit(10)->get());
         });
     }
 

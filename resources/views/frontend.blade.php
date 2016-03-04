@@ -6,32 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- This site is optimized with the Yoast SEO plugin v3.0.7 - https://yoast.com/wordpress/plugins/seo/ -->
-    <title>Free Download Medical Books</title>
+    <title>{{$meta_title}}</title>
     <meta name="description"
-          content="download free ebook, download ebooks, download free, ebook Pathology, ebook Pathophysiology, ebook, Physiology, ebook Histology, ebook Immunology, ebook Microbiology, download ebook anatomy, ebook Biochemistry, ebook Genetics,">
+          content="{{$meta_desc}}">
     <meta name="robots" content="noodp">
-    <link rel="canonical" href="http://sciencebasic.com/">
+    <link rel="canonical" href="{{url('/')}}">
     <meta property="og:locale" content="en_US">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Free Download Medical Books">
+    <meta property="og:title" content="{{$meta_title}}">
     <meta property="og:description"
-          content="download free ebook, download ebooks, download free, ebook Pathology, ebook Pathophysiology, ebook, Physiology, ebook Histology, ebook Immunology, ebook Microbiology, download ebook anatomy, ebook Biochemistry, ebook Genetics,">
-    <meta property="og:url" content="http://sciencebasic.com">
-    <meta property="og:site_name" content="Free Download Medical Books">
+          content="{{$meta_desc}}">
+    <meta property="og:url" content="{{$meta_url}}">
+    <meta property="og:site_name" content="{{$meta_title}}">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:description"
-          content="download free ebook, download ebooks, download free, ebook Pathology, ebook Pathophysiology, ebook, Physiology, ebook Histology, ebook Immunology, ebook Microbiology, download ebook anatomy, ebook Biochemistry, ebook Genetics,">
-    <meta name="twitter:title" content="Free Download Medical Books">
+          content="{{$meta_desc}}">
+    <meta name="twitter:title" content="{{$meta_title}}">
 
-    <script type="application/ld+json">
-        {"@context":"http:\/\/schema.org","@type":"WebSite","url":"http:\/\/sciencebasic.com\/","name":"Free Download Medical Books","potentialAction":{"@type":"SearchAction","target":"http:\/\/sciencebasic.com\/?s={search_term_string}","query-input":"required name=search_term_string"}}
-    </script>
-    <!-- / Yoast SEO plugin. -->
 
-    <link rel="alternate" type="application/rss+xml" title="Free Download Medical Books » Feed"
-          href="http://sciencebasic.com/feed">
-    <link rel="alternate" type="application/rss+xml" title="Free Download Medical Books » Comments Feed"
-          href="http://sciencebasic.com/comments/feed">
+    <link rel="alternate" type="application/rss+xml" title="{{$meta_title}} » Feed"
+          href="{{url('feed')}}">
 
     <link rel="stylesheet"
           id="pmpro_frontend-css"

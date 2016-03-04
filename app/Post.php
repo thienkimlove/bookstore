@@ -10,6 +10,8 @@ class Post extends Model implements SluggableInterface
 {
     use SluggableTrait;
 
+    protected $times = ['update_at', 'created_at'];
+
     protected $sluggable = array(
         'build_from' => 'title',
         'save_to'    => 'slug',
@@ -19,11 +21,16 @@ class Post extends Model implements SluggableInterface
     protected $fillable = [
         'title',
         'category_id',
+        'ibsn',
+        'recent',
+        'feature',
         'slug',
         'desc',
         'content',
         'publisher',
         'release_date',
+        'preview',
+        'author',
         'pages',
         'image',
         'status'
@@ -67,5 +74,10 @@ class Post extends Model implements SluggableInterface
     public function getTagListAttribute()
     {
         return $this->tags->lists('name')->all();
+    }
+
+    public function crawler()
+    {
+        return $this->hasOne(Crawler::class);
     }
 }

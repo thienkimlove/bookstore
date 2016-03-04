@@ -32,6 +32,11 @@
             </div>
 
             <div class="form-group">
+                {!! Form::label('ibsn', 'IBSN 10') !!}
+                {!! Form::text('ibsn', null, ['class' => 'form-control']) !!}
+            </div>
+
+            <div class="form-group">
                 {!! Form::label('desc', 'Short Description') !!}
                 {!! Form::textarea('desc', null, ['class' => 'form-control']) !!}
             </div>
@@ -59,18 +64,34 @@
 
             <div class="form-group">
                 {!! Form::label('image', 'Image') !!}
-                @if ($post->image)
-                    <img src="{{url('img/cache/120x120/' . $post->image)}}" />
-                    <hr>
-                @endif
-                {!! Form::file('image', null, ['class' => 'form-control']) !!}
+                {!! Form::text('image', null, ['class' => 'form-control']) !!}
             </div>
+
+                <div class="form-group">
+                    {!! Form::label('preview', 'Preview Link') !!}
+                    {!! Form::text('preview', null, ['class' => 'form-control']) !!}
+                </div>
+
+                <div class="form-group">
+                    {!! Form::label('author', 'Author') !!}
+                    {!! Form::text('author', null, ['class' => 'form-control']) !!}
+                </div>
 
             <div class="form-group">
                 {!! Form::label('tag_list', 'Tags') !!}
                 {!! Form::select('tag_list[]', $tags, null, ['id' => 'tag_list', 'class' => 'form-control', 'multiple']) !!}
             </div>
 
+
+            <div class="form-group">
+                {!! Form::label('feature', 'Feature') !!}
+                {!! Form::checkbox('feature', null, null) !!}
+            </div>
+
+            <div class="form-group">
+                {!! Form::label('recent', 'Recent') !!}
+                {!! Form::checkbox('recent', null, null) !!}
+            </div>
 
             <div class="form-group">
                 {!! Form::label('status', 'Publish') !!}

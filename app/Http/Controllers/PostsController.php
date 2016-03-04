@@ -27,11 +27,13 @@ class PostsController extends AdminController
 
     protected function syncTags($request, Post $post)
     {
-        $tagIds = [];
-        foreach ($request->input('tag_list') as $tag) {
-            $tagIds[] = Tag::firstOrCreate(['name' => $tag])->id;
+        if ($request->input('tag_list')) {
+            $tagIds = [];
+            foreach ($request->input('tag_list') as $tag) {
+                $tagIds[] = Tag::firstOrCreate(['name' => $tag])->id;
+            }
+            $post->tags()->sync($tagIds);
         }
-        $post->tags()->sync($tagIds);
     }
 
     public function index(Request $request)
@@ -65,8 +67,10 @@ class PostsController extends AdminController
     public function store(PostRequest $request)
     {
         $data = $request->all();
-        $data['image'] =  ($request->file('image') && $request->file('image')->isValid()) ? $this->saveImage($request->file('image')) : '';
+
         $data['status'] = ($request->input('status') == 'on') ? true : false;
+        $data['recent'] = ($request->input('recent') == 'on') ? true : false;
+        $data['feature'] = ($request->input('feature') == 'on') ? true : false;
         $post = Post::create($data);
         $this->syncTags($request, $post);
         flash('Create post success!', 'success');
@@ -85,10 +89,10 @@ class PostsController extends AdminController
     {
         $data = $request->all();
         $post = Post::find($id);
-        if ($request->file('image') && $request->file('image')->isValid()) {
-            $data['image'] = $this->saveImage($request->file('image'), $post->image);
-        }
+
         $data['status'] = ($request->input('status') == 'on') ? true : false;
+        $data['recent'] = ($request->input('recent') == 'on') ? true : false;
+        $data['feature'] = ($request->input('feature') == 'on') ? true : false;
         $post->update($data);
         $this->syncTags($request, $post);
         flash('Update post success!', 'success');
@@ -97,11 +101,8 @@ class PostsController extends AdminController
 
     public function destroy($id)
     {
-       $post = Post::find($id);
-        if (file_exists(public_path('files/' . $post->image))) {
-            @unlink(public_path('files/' . $post->image));
-        }
-        $post->delete();
+        Post::find($id)->delete();
+
         flash('Success deleted post!');
         return redirect('admin/posts');
     }
