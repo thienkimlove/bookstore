@@ -120,7 +120,7 @@
                             </div>
                             <div class="et-box et-download">
                                 <div class="et-box-content">
-                                    Note: Download link not available at this time. You can view online at <a href="{{$post->preview}}" target="_blank">Preview Link</a>
+                                    Note: Download link not available at this time. You can view online at <a href="{{$post->preview}}" target="_blank">Web Reader</a>
                                 </div>
                             </div>
                         </div>

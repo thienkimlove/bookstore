@@ -21,13 +21,73 @@ Route::get('/', function (\Illuminate\Http\Request $request) {
         $page_title = 'New Books';
         $posts = \App\Post::latest()->limit(20)->get();
     }
-    $randomPosts = \App\Post::all()->random(4);
+    $randomPosts = \App\Post::all()->random(20);
     return view('frontend.index', compact('posts', 'randomPosts', 'page_title'))->with([
         'meta_title' => ($request->input('s'))? 'Search with keyword : '.$request->input('s') .' | '.env('SITE_NAME') : 'Free Download Medical Books'.' | '.env('SITE_NAME'),
         'meta_desc' => 'download free ebook, download ebooks, download free, ebook Pathology, ebook Pathophysiology, ebook, Physiology, ebook Histology, ebook Immunology, ebook Microbiology, download ebook anatomy, ebook Biochemistry, ebook Genetics,',
         'meta_url' => ($request->input('s')) ? url('/s='.$request->input('s')) : url('/')
     ]);
+});    
+
+// sitemap index
+Route::get('feed', function()
+{
+    // create sitemap
+    $sitemap = App::make("sitemap");
+
+    // set cache
+    $sitemap->setCache('laravel.sitemap-index', 3600);
+
+    // add sitemaps (loc, lastmod (optional))
+    $sitemap->addSitemap(url('sitemap-posts'));
+    $sitemap->addSitemap(url('sitemap-categories'));
+
+    // show sitemap
+    return $sitemap->render('sitemapindex');
+});        
+
+// sitemap with posts
+Route::get('sitemap-posts', function()
+{
+    // create sitemap
+    $sitemap_posts = App::make("sitemap");
+
+    // set cache
+    $sitemap_posts->setCache('laravel.sitemap-posts', 3600);
+
+    // add items
+    $posts = \App\Post::all();
+
+     foreach ($posts as $post)
+     {
+        $sitemap_posts->add(url($post->slug.'.html'), $post->updated_at, '0.9', 'daily');
+     }
+
+    // show sitemap
+    return $sitemap_posts->render('xml');
 });
+
+// sitemap with posts
+Route::get('sitemap-categories', function()
+{
+    // create sitemap
+    $sitemap_categories = App::make("sitemap");
+
+    // set cache
+    $sitemap_categories->setCache('laravel.sitemap-categories', 3600);
+
+    // add items
+    $categories = \App\Category::all();
+
+     foreach ($categories as $category)
+     {
+        $sitemap_categories->add(url($category->slug), $category->updated_at, '0.9', 'weekly');
+     }
+
+    // show sitemap
+    return $sitemap_categories->render('xml');
+});
+
 
 Route::get('example/composer', function(){
     return view('example.composer');
@@ -72,11 +132,11 @@ Route::get('{value}', function ($value) {
         $post = \App\Post::where('slug', $matches[1])->first();
         $relatedPosts =  \App\Post::where('status', true)
             ->where('category_id', $post->category->id)
-            ->limit(10)->get();
+            ->limit(20)->get();
 
         return view('frontend.detail', compact('post', 'relatedPosts'))->with([
             'meta_title' => $post->title . ' | '.env('SITE_NAME'),
-            'meta_desc' => $post->desc,
+            'meta_desc' => str_limit($post->desc, 200),
             'meta_url' => url($post->slug.'.html')
         ]);
     } else {

@@ -33,7 +33,7 @@ class ViewComposerProvider extends ServiceProvider
         });
 
         view()->composer('frontend.aside', function ($view) {
-            $view->with('recentPosts',  Post::where('recent', true)->limit(10)->get());
+            $view->with('recentPosts',  Post::all()->random(20));
         });
     }
 

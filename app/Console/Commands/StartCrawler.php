@@ -33,10 +33,93 @@ class StartCrawler extends Command
     {
         parent::__construct();
     }
+    
+    protected function googleBook($limit, $keyword)
+    {
+        $url = 'https://www.googleapis.com/books/v1/volumes?q='.$keyword.'&printType=books&projection=full&orderBy=newest';
+        
+        $urlDetails = Main::crawlerLink($url);
+        
+        $urlDetails = json_decode($urlDetails, true);
+        
+        $books = [];
+        
+        if (isset($urlDetails['totalItems'])) {
+            $totalItems = (int) $urlDetails['totalItems'];
+            
+            if ($totalItems > 0) {
+                $maxIndex = round($totalItems/40);
+                if ($maxIndex > $limit) {
+                    $maxIndex = $limit;
+                }
+                for ($i = 0; $i < $maxIndex; $i ++) {
+                  $startIndex = $i*40;   
+                  $browserUrl = 'https://www.googleapis.com/books/v1/volumes?q='.$keyword.'&startIndex='.$startIndex.'&maxResults=40&printType=books&projection=full&orderBy=newest';  
+                   
+                
+                  $bookDetails = Main::crawlerLink($browserUrl);
+                  if ($bookDetails) {
+                    $bookDetails = json_decode($bookDetails, true);                       
+                    if (isset($bookDetails['items'])) {
+                        foreach ($bookDetails['items'] as $item) {      
+                            
+                            $categoryName = isset($item['volumeInfo']['categories'][0]) ? $item['volumeInfo']['categories'][0] : 'General';
+                            $category =  Category::updateOrCreate(
+                                ['name' => $categoryName],
+                                ['name' => $categoryName, 'parent_id' => null]
+                            );
+                            
+                            $title = isset($item['volumeInfo']['title']) ? $item['volumeInfo']['title'] : '';
+                            $subtitle = isset($item['volumeInfo']['subtitle']) ? $item['volumeInfo']['subtitle'] : '';
+                            
+                            $title = ($title || $subtitle) ? $title. ' '. $subtitle : '';
+                            
+                            $ibsn = isset($item['volumeInfo']['industryIdentifiers'][0]['identifier']) ? $item['volumeInfo']['industryIdentifiers'][0]['identifier'] : '';
+                            
+                            $publisher = isset($item['volumeInfo']['publisher']) ? $item['volumeInfo']['publisher'] : '';
+                            
+                            $release_date = isset($item['volumeInfo']['publishedDate']) ? $item['volumeInfo']['publishedDate'] : ''; 
+                            
+                            $content = isset($item['volumeInfo']['description']) ? $item['volumeInfo']['description'] : '';
+                            
+                            $pages = isset($item['volumeInfo']['pageCount']) ? $item['volumeInfo']['pageCount'] : 500;
+                            
+                            $image = isset($item['volumeInfo']['imageLinks']['thumbnail']) ? $item['volumeInfo']['imageLinks']['thumbnail'] : '';
+                            
+                            $authors = isset($item['volumeInfo']['authors']) ? $item['volumeInfo']['authors'] : [];
+                            
+                            $preview = isset($item['accessInfo']['webReaderLink']) ? $item['accessInfo']['webReaderLink'] : '';
+                            
+                            
+                            if ($title && $publisher && $release_date && $content && $image && $authors && $preview && $ibsn) {
+                                                               
+                                 Post::updateOrCreate(['ibsn' => $ibsn], [
+                                    'title' => $title,
+                                    'category_id' => $category->id,
+                                    'desc' => $content,
+                                    'content' => $content,
+                                    'publisher' => $publisher,
+                                    'release_date' => $release_date,
+                                    'author' => implode(',', $authors),
+                                    'image' => $image,
+                                    'ibns' => $ibsn,
+                                    'preview' => $preview,
+                                    'pages' => $pages,
+                                    'status' => true
+                                 ]);
+                            }
+                               
+                        }
+                    }                   
+                } 
+               }
+            } 
+        }
+    }
 
     protected function insertLinks($maxPage, $keyword)
     {
-        $books = [];
+        $books = [];     
 
         for ($i = 1; $i <= $maxPage; $i ++) {
             $browserUrl = 'http://www.amazon.com/gp/search/ref=sr_pg_2?rh=n%3A283155%2Ck%3A'.$keyword.'%2Cp_n_feature_browse-bin%3A2656022011&page='.$i.'&bbn=283155&keywords='.$keyword.'&ie=UTF8&qid=1457062909';
@@ -146,8 +229,8 @@ class StartCrawler extends Command
             $maxPage = $this->option('max') ? (int) $this->option('max') : 100;
             $this->insertLinks($maxPage, $keyword);
         } else {
-            $limit = $this->option('limit') ? (int) $this->option('limit') : 100;
-            $this->crawlBook($limit, $keyword);
+            $limit = $this->option('limit') ? (int) $this->option('limit') : 100000;
+            $this->googleBook($limit, $keyword);
         }
 
     }
