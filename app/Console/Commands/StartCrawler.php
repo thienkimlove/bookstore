@@ -64,9 +64,9 @@ class StartCrawler extends Command
         }
     }
 
-    protected function crawlBook($limit)
+    protected function crawlBook($limit, $keyword)
     {
-        $crawlerDatabases = \App\Crawler::where('post_id', 0)->limit($limit)->get();
+        $crawlerDatabases = \App\Crawler::where('post_id', 0)->where('keyword', $keyword)->limit($limit)->get();
 
         foreach ($crawlerDatabases as $crawlerDatabase) {
 
@@ -147,7 +147,7 @@ class StartCrawler extends Command
             $this->insertLinks($maxPage, $keyword);
         } else {
             $limit = $this->option('limit') ? (int) $this->option('limit') : 100;
-            $this->crawlBook($limit);
+            $this->crawlBook($limit, $keyword);
         }
 
     }
