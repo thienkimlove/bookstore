@@ -11,7 +11,7 @@
         </div>
     </section>
     <section id="recent-posts-4" class="widget widget_recent_entries">
-        <div class="widget-wrap"><h4 class="widget-title widgettitle">Recent Posts</h4>
+        <div class="widget-wrap"><h4 class="widget-title widgettitle">Recent Books</h4>
             <ul>
                 @foreach ($recentPosts as $post)
                     <li>
