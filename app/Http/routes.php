@@ -135,8 +135,8 @@ Route::get('{value}', function ($value) {
             ->limit(20)->get();
 
         return view('frontend.detail', compact('post', 'relatedPosts'))->with([
-            'meta_title' => $post->title . ' | '.env('SITE_NAME'),
-            'meta_desc' => str_limit($post->desc, 155),
+            'meta_title' => str_limit($post->title, 50) . ' | '.env('SITE_NAME'),
+            'meta_desc' => str_limit($post->desc, 150),
             'meta_url' => url($post->slug.'.html')
         ]);
     } else {

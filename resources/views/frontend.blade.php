@@ -23,7 +23,7 @@
           content="{{$meta_desc}}">
     <meta name="twitter:title" content="{{$meta_title}}">
 
-
+     <link rel="alternate" hreflang="en" href="{{url('/')}}" />
     <link rel="alternate" type="application/rss+xml" title="{{$meta_title}} » Feed"
           href="{{url('feed')}}">
 
