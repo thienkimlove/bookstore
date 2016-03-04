@@ -136,7 +136,7 @@ Route::get('{value}', function ($value) {
 
         return view('frontend.detail', compact('post', 'relatedPosts'))->with([
             'meta_title' => $post->title . ' | '.env('SITE_NAME'),
-            'meta_desc' => str_limit($post->desc, 200),
+            'meta_desc' => str_limit($post->desc, 155),
             'meta_url' => url($post->slug.'.html')
         ]);
     } else {
