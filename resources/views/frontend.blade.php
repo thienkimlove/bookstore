@@ -56,7 +56,7 @@
     <![endif]-->
 </head>
 <body class="home blog content-sidebar magazine-pro-orange magazine-home js" itemscope=""
-      itemtype="http://schema.org/WebPage">
+      itemtype="http://schema.org/WebPage"> 
 <div class="site-container">
     @include('frontend.nav')
     @include('frontend.header')
@@ -75,6 +75,6 @@
   ga('create', 'UA-74695568-1', 'auto');
   ga('send', 'pageview');
 
-</script>
+</script>      
 </body>
 </html>

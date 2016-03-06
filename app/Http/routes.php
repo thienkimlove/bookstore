@@ -130,11 +130,21 @@ Route::get('{value}', function ($value) {
     if (preg_match('/([a-z0-9\-]+)\.html/', $value, $matches)) {
 
         $post = \App\Post::where('slug', $matches[1])->first();
+        
+        $temp = parse_url($post->preview, PHP_URL_QUERY);
+        
+        $temp = explode('&', $temp);
+        
+        
+        
+        $google_id = str_replace('id=', '', $temp[0]);
+       
+        
         $relatedPosts =  \App\Post::where('status', true)
             ->where('category_id', $post->category->id)
-            ->limit(20)->get();
+            ->limit(10)->get();
 
-        return view('frontend.detail', compact('post', 'relatedPosts'))->with([
+        return view('frontend.detail', compact('post', 'relatedPosts', 'google_id'))->with([
             'meta_title' => str_limit($post->title, 50) . ' | '.env('SITE_NAME'),
             'meta_desc' => str_limit($post->desc, 150),
             'meta_url' => url($post->slug.'.html')

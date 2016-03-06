@@ -120,7 +120,7 @@
                             </div>
                             <div class="et-box et-download">
                                 <div class="et-box-content">
-                                    Note: Download link not available at this time. You can view online at <a href="{{$post->preview}}" target="_blank">Web Reader</a>
+                                    Note: Download link not available at this time. You can read the content at <a href="#iframe" >Read Book</a>
                                 </div>
                             </div>
                         </div>
@@ -135,6 +135,12 @@
                             </li>
                              @endforeach
                         </ul>
+                    </div>      
+                    <div id="iframe" class="same">
+                      <iframe frameborder="0" height="700" scrolling="no" 
+                      src="http://books.google.com.sg/books?id={{$google_id}}&amp;lpg=PP1&amp;pg=PP1&amp;output=embed" 
+                      style="border: 0px;" width="680">
+                      </iframe>
                     </div>
                     <footer class="entry-footer">
                         <p class="entry-meta">
