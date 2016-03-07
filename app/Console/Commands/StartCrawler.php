@@ -49,13 +49,13 @@ class StartCrawler extends Command
             $totalItems = (int) $urlDetails['totalItems'];
             
             if ($totalItems > 0) {
-                $maxIndex = round($totalItems/40);
+                $maxIndex = round($totalItems/20);
                 if ($maxIndex > $limit) {
                     $maxIndex = $limit;
                 }
                 for ($i = 0; $i < $maxIndex; $i ++) {
-                  $startIndex = $i*40;   
-                  $browserUrl = 'https://www.googleapis.com/books/v1/volumes?q='.$keyword.'&startIndex='.$startIndex.'&maxResults=40&printType=books&projection=full&orderBy=newest';  
+                  $startIndex = $i*20;
+                  $browserUrl = 'https://www.googleapis.com/books/v1/volumes?q='.$keyword.'&startIndex='.$startIndex.'&maxResults=20&printType=books&projection=full&orderBy=newest';
                    
                 
                   $bookDetails = Main::crawlerLink($browserUrl);
