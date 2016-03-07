@@ -75,9 +75,4 @@ class Post extends Model implements SluggableInterface
     {
         return $this->tags->lists('name')->all();
     }
-
-    public function crawler()
-    {
-        return $this->hasOne(Crawler::class);
-    }
 }
