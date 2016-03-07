@@ -23,7 +23,7 @@ Route::get('/', function (\Illuminate\Http\Request $request) {
     }
     $randomPosts = \App\Post::all()->random(20);
     return view('frontend.index', compact('posts', 'randomPosts', 'page_title'))->with([
-        'meta_title' => ($request->input('s'))? 'Search with keyword : '.$request->input('s') .' | '.env('SITE_NAME') : 'Free Download Medical Books'.' | '.env('SITE_NAME'),
+        'meta_title' => ($request->input('s'))? 'Search with keyword : '.$request->input('s')  : 'Free Download Medical Books',
         'meta_desc' => 'download free ebook, download ebooks, download free, ebook Pathology, ebook Pathophysiology, ebook, Physiology, ebook Histology, ebook Immunology, ebook Microbiology, download ebook anatomy, ebook Biochemistry, ebook Genetics,',
         'meta_url' => ($request->input('s')) ? url('/s='.$request->input('s')) : url('/')
     ]);
@@ -145,7 +145,7 @@ Route::get('{value}', function ($value) {
             ->limit(10)->get();
 
         return view('frontend.detail', compact('post', 'relatedPosts', 'google_id'))->with([
-            'meta_title' => str_limit($post->title, 50) . ' | '.env('SITE_NAME'),
+            'meta_title' => str_limit($post->title, 50),
             'meta_desc' => str_limit($post->desc, 150),
             'meta_url' => url($post->slug.'.html')
         ]);
@@ -160,7 +160,7 @@ Route::get('{value}', function ($value) {
         return view('frontend.category', compact(
             'category', 'page', 'topPosts', 'posts'
         ))->with([
-            'meta_title' => $category->name.' | '.env('SITE_NAME'),
+            'meta_title' => $category->name,
             'meta_desc' => $category->name,
             'meta_url' => url($category->slug)
         ]);
