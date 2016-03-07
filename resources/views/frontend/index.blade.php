@@ -23,9 +23,11 @@
                                 class="post-{{$post->id}} post type-post status-publish format-standard has-post-thumbnail category-general pmpro-has-access entry">
 
                                 <a href="{{url($post->slug. '.html')}}"
-                                   class="alignnone" aria-hidden="true"><img
+                                   class="alignnone" aria-hidden="true">
+                                    <img
                                             src="{{ $post->image }}"
                                             class="entry-image attachment-post"
+                                            style="height: 220px"
                                             alt="{{$post->title}}"
                                             itemprop="image"
                                             height="150"
@@ -62,6 +64,7 @@
                                         src="{{$post->image}}"
                                         class="entry-image attachment-post"
                                         alt="{{$post->title}}"
+                                        style="height: 220px"
                                         itemprop="image"
                                         height="150"
                                         width="150">

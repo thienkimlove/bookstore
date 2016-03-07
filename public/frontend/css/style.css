@@ -19,7 +19,7 @@
 .home-top .featured-content:first-child .entry:nth-of-type(4n),
 .home-top .featured-content:first-child .entry:nth-of-type(4n) {margin-right:0!}
 .home-top .featured-content:first-child .entry img.entry-image,
-.home-top .featured-content:first-child .entry img.entry-image {border:1px solid #dbdbdb;padding:2px}
+.home-top .featured-content:first-child .entry img.entry-image {border:1px solid #dbdbdb;padding:2px;}
 .home-top .featured-content:first-child .entry h2.entry-title,
 .home-top .featured-content:first-child .entry h2.entry-title {font-size:1.4rem;line-height:20px;height:40px;overflow:hidden}
 
