@@ -4,5 +4,6 @@
         <p></p>
         <p>Some Rights Reserved | Privacy Policy | Terms of Service | Refund Policy | Contact Us</p>
         <p></p>
-        <p></p></div>
+        <p></p>
+    </div>
 </footer>

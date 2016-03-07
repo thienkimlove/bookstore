@@ -48,7 +48,6 @@
           media="all">
     <script type="text/javascript" src="{{url('frontend/js/jquery.js')}}"></script>
     <script type="text/javascript" src="{{url('frontend/js/jquery-migrate.js')}}"></script>
-    <script type="text/javascript" src="{{url('frontend/js/paid-memberships-pro.js')}}"></script>
     <script type="text/javascript" src="{{url('frontend/js/entry-date.js')}}"></script>
     <script type="text/javascript" src="{{url('frontend/js/responsive-menu.js')}}"></script>
     <!--[if lt IE 9]>
@@ -74,6 +73,6 @@
   ga('create', 'UA-74695568-1', 'auto');
   ga('send', 'pageview');
 
-</script>      
+</script>
 </body>
 </html>
