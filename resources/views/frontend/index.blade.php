@@ -27,7 +27,7 @@
                                     <img
                                             src="{{ $post->image }}"
                                             class="entry-image attachment-post"
-                                            style="height: 220px"
+                                            style="height: 150px"
                                             alt="{{$post->title}}"
                                             itemprop="image"
                                             height="150"
@@ -64,7 +64,7 @@
                                         src="{{$post->image}}"
                                         class="entry-image attachment-post"
                                         alt="{{$post->title}}"
-                                        style="height: 220px"
+                                        style="height: 150px"
                                         itemprop="image"
                                         height="150"
                                         width="150">
