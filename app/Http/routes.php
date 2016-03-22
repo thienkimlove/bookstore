@@ -12,6 +12,9 @@
 */
 
 
+use App\Crawlers\Main;
+use App\Download;
+
 Route::get('/', function (\Illuminate\Http\Request $request) {
 
     if ($request->input('s')) {
@@ -130,6 +133,33 @@ Route::get('{value}', function ($value) {
     if (preg_match('/([a-z0-9\-]+)\.html/', $value, $matches)) {
 
         $post = \App\Post::where('slug', $matches[1])->first();
+
+        if (!$post->download) {
+            $escape_title = urlencode($post->title);
+            $key = 'AIzaSyB4lI0zqMcqLa1bmMwzqenu9kgieb-ZKW8';
+            $download_url = 'https://www.googleapis.com/customsearch/v1?key='.$key.'&cx=007984933932694601763:shxevrgfvso&c2coff=0&q='.$escape_title.'&hl=en&fileType=pdf';
+            $searchDetails = Main::crawlerLink($download_url);
+            $urlDetails = json_decode($searchDetails, true);
+            $update = false;
+            if (isset($urlDetails['items'])) {
+                foreach ($urlDetails['items'] as $item) {
+                    if (isset($item['link']) && Main::isPdfUrl($item['link'])) {
+                        $update = true;
+                        Download::create([
+                            'post_id' => $post->id,
+                            'link' => $item['link']
+                        ]);
+                    }
+                }
+            }
+
+            if ($update) {
+                $post->download = true;
+                $post->save();
+
+                $post = \App\Post::find($post->id);
+            }
+        }
         
         $temp = parse_url($post->preview, PHP_URL_QUERY);
         

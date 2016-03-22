@@ -119,16 +119,7 @@ class StartCrawler extends Command
         }
     }
 
-    public function isPdfUrl($url)
-    {
-        $path = parse_url($url, PHP_URL_PATH);
-        $ext = pathinfo($path, PATHINFO_EXTENSION);
 
-        if (strtolower($ext) == 'pdf') {
-            return true;
-        }
-        return false;
-    }
 
     public function getDownloads($key = 0)
     {
@@ -141,7 +132,7 @@ class StartCrawler extends Command
             'AIzaSyB_q6eumkufXePU9kDPWpsInMTVeGrBN_A',
             'AIzaSyAxxlPSbQHBGio4MvqQP7-4p7KtR7Kg8ws',
             'AIzaSyCq0DdrHku3vVWRhZhgWBe3ABCtu1kL1JA',
-            'AIzaSyB4lI0zqMcqLa1bmMwzqenu9kgieb-ZKW8'
+            //'AIzaSyB4lI0zqMcqLa1bmMwzqenu9kgieb-ZKW8' for application browser.
         ];
         $posts = Post::where('download', false)->orderBy('id', 'asc')->limit(100)->get();
         foreach ($posts as $post) {
@@ -154,7 +145,7 @@ class StartCrawler extends Command
             $update = false;
             if (isset($urlDetails['items'])) {
                 foreach ($urlDetails['items'] as $item) {
-                    if (isset($item['link']) && $this->isPdfUrl($item['link'])) {
+                    if (isset($item['link']) && Main::isPdfUrl($item['link'])) {
                         $update = true;
                         Download::create([
                             'post_id' => $post->id,

@@ -21,6 +21,17 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class Main {
 
+    public static function isPdfUrl($url)
+    {
+        $path = parse_url($url, PHP_URL_PATH);
+        $ext = pathinfo($path, PATHINFO_EXTENSION);
+
+        if (strtolower($ext) == 'pdf') {
+            return true;
+        }
+        return false;
+    }
+
     /**
      * save image to public.
      * @param $url
