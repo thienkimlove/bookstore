@@ -27,5 +27,23 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+
+        $schedule->command('crawler:start --download=1 --key=0')
+                 ->daily();
+        $schedule->command('crawler:start --download=1 --key=1')
+            ->daily();
+        $schedule->command('crawler:start --download=1 --key=2')
+            ->daily();
+        $schedule->command('crawler:start --download=1 --key=3')
+            ->daily();
+        $schedule->command('crawler:start --download=1 --key=4')
+            ->daily();
+        $schedule->command('crawler:start --download=1 --key=5')
+            ->daily();
+        $schedule->command('crawler:start --download=1 --key=6')
+            ->daily();
+
+        $schedule->command('crawler:start --download=1 --key=7')
+            ->daily();
     }
 }
