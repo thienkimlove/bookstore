@@ -167,6 +167,9 @@ class StartCrawler extends Command
                         }
                     }
                 }
+
+                $post->download = true;
+                $post->save();
             }
 
 
