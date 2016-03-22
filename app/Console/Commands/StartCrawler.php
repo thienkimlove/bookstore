@@ -134,6 +134,20 @@ class StartCrawler extends Command
                     'keyword' => $key
                 ]);
             }
+        } else if ($this->option('download')) {
+
+            $posts = Post::where('download', false)->limit(10)->get();
+
+            foreach ($posts as $post) {
+                $escape_title = urlencode($post->title);
+
+                $download_url = 'http://www.pdfsearchengine.org/results.html?cx=016703912148653225111%3Aosmuvcrimei&cof=FORID%3A10&ie=UTF-8&q=filetype%3Apdf+'.$escape_title.'&qfront='.$escape_title.'&sa=Search&algorithm=filetype%3Apdf+&siteurl=www.pdfsearchengine.org%2F&ref=www.google.com&ss=';
+                $searchDetails = Main::crawlerLink($download_url);
+
+                dd($searchDetails);
+            }
+
+
         } else {
             $keyword = Keyword::where('using', false)->get();
             if ($keyword->count() > 0) {
