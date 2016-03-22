@@ -17,7 +17,7 @@ class StartCrawler extends Command
      *
      * @var string
      */
-    protected $signature = 'crawler:start {--insert=} {--limit=} {--download=}';
+    protected $signature = 'crawler:start {--insert=} {--limit=} {--download=} {--key=}';
 
     /**
      * The console command description.
@@ -130,6 +130,48 @@ class StartCrawler extends Command
         return false;
     }
 
+    public function getDownloads($key = 0)
+    {
+        $apiList = [
+            'AIzaSyAWH9J9ZUHyGBm7G8uoKbqykEnL-ZzHdVU',
+            'AIzaSyDyxq9nrhKA6alpTcWWcuer249NwOCxZ6w',
+            'AIzaSyAghqYRlZ1CqUqG2kqAjGCKyZxEpfCNfps',
+            'AIzaSyChK6MK61ZHXrY8GDhR9sRUorIGUDVb150',
+            'AIzaSyD6UeIP6Hu78rtrDrj3cKhLosQ7EG5QgLQ',
+            'AIzaSyB_q6eumkufXePU9kDPWpsInMTVeGrBN_A',
+            'AIzaSyAxxlPSbQHBGio4MvqQP7-4p7KtR7Kg8ws',
+            'AIzaSyCq0DdrHku3vVWRhZhgWBe3ABCtu1kL1JA',
+            'AIzaSyB4lI0zqMcqLa1bmMwzqenu9kgieb-ZKW8'
+        ];
+        $posts = Post::where('download', false)->orderBy('id', 'asc')->limit(100)->get();
+        foreach ($posts as $post) {
+            $escape_title = urlencode($post->title);
+
+
+            $download_url = 'https://www.googleapis.com/customsearch/v1?key='.$apiList[$key].'&cx=007984933932694601763:shxevrgfvso&c2coff=0&q='.$escape_title.'&hl=en&fileType=pdf';
+            $searchDetails = Main::crawlerLink($download_url);
+            $urlDetails = json_decode($searchDetails, true);
+            $update = false;
+            if (isset($urlDetails['items'])) {
+                foreach ($urlDetails['items'] as $item) {
+                    if (isset($item['link']) && $this->isPdfUrl($item['link'])) {
+                        $update = true;
+                        Download::create([
+                            'post_id' => $post->id,
+                            'link' => $item['link']
+                        ]);
+                    }
+                }
+            }
+
+            if ($update) {
+                $post->download = true;
+                $post->save();
+            }
+
+        }
+    }
+
 
     /**
      * Execute the console command.
@@ -147,37 +189,8 @@ class StartCrawler extends Command
                 ]);
             }
         } else if ($this->option('download')) {
-
-            $posts = Post::latest()->where('download', false)->limit(100)->get();
-
-            foreach ($posts as $post) {
-                $escape_title = urlencode($post->title);
-                $apilist = ['AIzaSyAWH9J9ZUHyGBm7G8uoKbqykEnL-ZzHdVU', 'AIzaSyDyxq9nrhKA6alpTcWWcuer249NwOCxZ6w']; 
-
-                $download_url = 'https://www.googleapis.com/customsearch/v1?key='.$apilist[0].'&cx=007984933932694601763:shxevrgfvso&c2coff=0&q='.$escape_title.'&hl=en&fileType=pdf';
-                $searchDetails = Main::crawlerLink($download_url);
-                $urlDetails = json_decode($searchDetails, true);
-                $update = false;
-                if (isset($urlDetails['items'])) {
-                    foreach ($urlDetails['items'] as $item) {
-                        if (isset($item['link']) && $this->isPdfUrl($item['link'])) {
-                            $update = true;
-                            Download::create([
-                                'post_id' => $post->id,
-                                'link' => $item['link']
-                            ]);
-                        }
-                    }
-                }
-
-                if ($update) {
-                    $post->download = true;
-                    $post->save();
-                }
-
-            }
-
-
+            $key = $this->option('key')? $this->option('key') : 0;
+            $this->getDownloads($key);
         } else {
             $keyword = Keyword::where('using', false)->get();
             if ($keyword->count() > 0) {
