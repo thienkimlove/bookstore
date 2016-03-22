@@ -148,7 +148,8 @@ class StartCrawler extends Command
             }
         } else if ($this->option('download')) {
 
-            $posts = Post::latest()->where('download', false)->limit(100)->get();
+            set_time_limit(0);
+            $posts = Post::latest()->where('download', false)->limit(1000)->get();
 
             foreach ($posts as $post) {
                 $escape_title = urlencode($post->title);
