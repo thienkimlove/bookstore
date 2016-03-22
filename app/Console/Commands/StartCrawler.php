@@ -152,8 +152,9 @@ class StartCrawler extends Command
 
             foreach ($posts as $post) {
                 $escape_title = urlencode($post->title);
+                $apilist = ['AIzaSyAWH9J9ZUHyGBm7G8uoKbqykEnL-ZzHdVU', 'AIzaSyDyxq9nrhKA6alpTcWWcuer249NwOCxZ6w']; 
 
-                $download_url = 'https://www.googleapis.com/customsearch/v1?key=AIzaSyDyxq9nrhKA6alpTcWWcuer249NwOCxZ6w&cx=007984933932694601763:shxevrgfvso&c2coff=0&q='.$escape_title.'&hl=en&fileType=pdf';
+                $download_url = 'https://www.googleapis.com/customsearch/v1?key='.$apilist[0].'&cx=007984933932694601763:shxevrgfvso&c2coff=0&q='.$escape_title.'&hl=en&fileType=pdf';
                 $searchDetails = Main::crawlerLink($download_url);
                 $urlDetails = json_decode($searchDetails, true);
                 $update = false;
