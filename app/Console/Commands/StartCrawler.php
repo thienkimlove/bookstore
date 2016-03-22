@@ -149,7 +149,8 @@ class StartCrawler extends Command
                         $update = true;
                         Download::create([
                             'post_id' => $post->id,
-                            'link' => $item['link']
+                            'link' => $item['link'],
+                            'title' => $item['title']
                         ]);
                     }
                 }

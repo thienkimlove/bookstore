@@ -124,15 +124,15 @@
                               <p>{!! $post->content !!}</p>
                             </div>
                             <div class="et-box et-download">
-                                <div class="et-box-content">
+                                <div class="et-box-content" style="padding: 0px">
 
-                                    <div id="download-free" class="sametitle">Free download link pdf : </div>
+                                    <div id="download-free" class="sametitle">Direct Download Links </div>
                                     <div class="same">
-                                        <ul>
+                                        <ul style="margin-left: 0.1rem">
                                             @foreach ($post->downloads as $download)
                                                 <li>
                                                     <a target="_blank" href="{{$download->link}}"
-                                                       rel="bookmark">{{$download->link}}</a>
+                                                       rel="bookmark"><strong>{{($download->title) ? $download->title : $download->link}}</strong> </a>
                                                 </li>
                                             @endforeach
                                         </ul>
