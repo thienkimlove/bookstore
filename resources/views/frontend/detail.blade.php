@@ -28,12 +28,16 @@
                           itemtype="http://schema.org/CreativeWork">
                     <header class="entry-header">
                         <h1 class="entry-title" itemprop="headline">{{$post->title}}</h1>
+
+                                <a href="#download-free"><h3 style="float: right"><img width="30" src="{{url('download.jpg')}}" />Go to Free Download Section</h3></a>
+
                         <p class="entry-meta">
                             <time class="entry-time" itemprop="datePublished" datetime="{{$post->updated_at->format('Y/m/d')}}">
                                 {{$post->updated_at->toFormattedDateString()}}
                             </time>
                         </p>
                     </header>
+
                     <!-- Review -->
                     <ins class="adsbygoogle"
                          style="display:block"
@@ -48,6 +52,7 @@
                              itemscope=""
                              itemtype="http://schema.org/Review"
                              style="border-style: solid; border-width: 1px;">
+
                             <!-- Meta for schema.org -->
                             <meta itemprop="headline"
                                   content="{{$post->title}} by {{$post->publisher}}">
@@ -120,28 +125,35 @@
                             </div>
                             <div class="et-box et-download">
                                 <div class="et-box-content">
-                                    Note: Download link not available at this time. You can read the content at <a href="#iframe" >Read Book</a>
+
+                                    <div id="download-free" class="sametitle">Free download link pdf : </div>
+                                    <div class="same">
+                                        <ul>
+                                            @foreach ($post->downloads as $download)
+                                                <li>
+                                                    <a target="_blank" href="{{$download->link}}"
+                                                       rel="bookmark">{{$download->link}}</a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                     <div class="sametitle">Related Books</div>
                     <div class="same">
                         <ul>
-                            @foreach ($relatedPosts as $post)
+                            @foreach ($relatedPosts as $relatedPost)
                             <li>
-                                <a href="{{url($post->slug.'.html')}}"
-                                   rel="bookmark">{{$post->title}}</a>
+                                <a href="{{url($relatedPost->slug.'.html')}}"
+                                   rel="bookmark">{{$relatedPost->title}}</a>
                             </li>
                              @endforeach
                         </ul>
-                    </div>      
-                    <div id="iframe" class="same">
-                      <iframe frameborder="0" height="700" scrolling="no" 
-                      src="http://books.google.com.sg/books?id={{$google_id}}&amp;lpg=PP1&amp;pg=PP1&amp;output=embed" 
-                      style="border: 0px;" width="680">
-                      </iframe>
                     </div>
+
                     <footer class="entry-footer">
                         <p class="entry-meta">
                             <span class="entry-categories">Filed Under:

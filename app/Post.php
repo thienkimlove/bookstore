@@ -33,7 +33,8 @@ class Post extends Model implements SluggableInterface
         'author',
         'pages',
         'image',
-        'status'
+        'status',
+        'download'
     ];
 
     /**
@@ -74,5 +75,10 @@ class Post extends Model implements SluggableInterface
     public function getTagListAttribute()
     {
         return $this->tags->lists('name')->all();
+    }
+
+    public function downloads()
+    {
+        return $this->hasMany(Download::class);
     }
 }

@@ -15,7 +15,7 @@
             <ul>
                 @foreach ($recentPosts as $post)
                     <li>
-                        <a href="{{url($post->slug. '.html')}}">{{$post->title}}</a>
+                        <a href="{{url($post->slug. '.html')}}"><img width="30" src="{{url('download.jpg')}}" />{{$post->title}}</a>
                     </li>
                 @endforeach
             </ul>

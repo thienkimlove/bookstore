@@ -49,7 +49,10 @@
                                     height="150"
                                     width="150">
                         </a>
-                        <p>{{$post->desc}}</p>
+                        <p>
+                            {{$post->desc}}
+                            <a href="{{url($post->slug.'.html#download-free')}}"><h3 style="float: right"><img width="30" src="{{url('download.jpg')}}" />Download</h3></a>
+                        </p>
                     </div>
                 </article>
                 @endforeach

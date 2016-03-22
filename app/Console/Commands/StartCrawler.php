@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Category;
 use App\Crawlers\Main;
+use App\Download;
 use App\Keyword;
 use App\Post;
 use Illuminate\Console\Command;
@@ -16,7 +17,7 @@ class StartCrawler extends Command
      *
      * @var string
      */
-    protected $signature = 'crawler:start {--insert=} {--limit=}';
+    protected $signature = 'crawler:start {--insert=} {--limit=} {--download=}';
 
     /**
      * The console command description.
@@ -118,6 +119,17 @@ class StartCrawler extends Command
         }
     }
 
+    public function isPdfUrl($url)
+    {
+        $path = parse_url($url, PHP_URL_PATH);
+        $ext = pathinfo($path, PATHINFO_EXTENSION);
+
+        if (strtolower($ext) == 'pdf') {
+            return true;
+        }
+        return false;
+    }
+
 
     /**
      * Execute the console command.
@@ -136,15 +148,25 @@ class StartCrawler extends Command
             }
         } else if ($this->option('download')) {
 
-            $posts = Post::where('download', false)->limit(10)->get();
+            $posts = Post::latest()->where('download', false)->limit(100)->get();
 
             foreach ($posts as $post) {
                 $escape_title = urlencode($post->title);
 
-                $download_url = 'http://www.pdfsearchengine.org/results.html?cx=016703912148653225111%3Aosmuvcrimei&cof=FORID%3A10&ie=UTF-8&q=filetype%3Apdf+'.$escape_title.'&qfront='.$escape_title.'&sa=Search&algorithm=filetype%3Apdf+&siteurl=www.pdfsearchengine.org%2F&ref=www.google.com&ss=';
+                $download_url = 'https://www.googleapis.com/customsearch/v1?key=AIzaSyDyxq9nrhKA6alpTcWWcuer249NwOCxZ6w&cx=007984933932694601763:shxevrgfvso&c2coff=0&q='.$escape_title.'&hl=en&fileType=pdf';
                 $searchDetails = Main::crawlerLink($download_url);
+                $urlDetails = json_decode($searchDetails, true);
 
-                dd($searchDetails);
+                if (isset($urlDetails['items'])) {
+                    foreach ($urlDetails['items'] as $item) {
+                        if (isset($item['link']) && $this->isPdfUrl($item['link'])) {
+                            Download::create([
+                                'post_id' => $post->id,
+                                'link' => $item['link']
+                            ]);
+                        }
+                    }
+                }
             }
 
 
