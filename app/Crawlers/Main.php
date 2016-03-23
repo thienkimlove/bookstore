@@ -19,7 +19,8 @@ use Carbon\Carbon;
 use Symfony\Component\DomCrawler\Crawler;
 
 
-class Main {
+class Main
+{
 
     public static function isPdfUrl($url)
     {
@@ -48,7 +49,7 @@ class Main {
             $name = md5(time()) . '.png';
         }
         try {
-            Image::make($url)->save(public_path('files/'. $name));
+            Image::make($url)->save(public_path('files/' . $name));
         } catch (NotReadableException $e) {
             return;
         }
@@ -57,24 +58,44 @@ class Main {
 
 
     /**
-     * crawl a link     *
+     * crawl a link
      * @param $link
-     * @param bool $redirect
+     * @param array $options
      * @return string
      */
-    public static function crawlerLink($link)
+    public static function crawlerLink($link, $options = [])
     {
         set_time_limit(0);
 
         try {
             $client = new Client();
-            $response = $client->request('GET', $link);
+            $response = $client->request('GET', $link, $options);
             if ($response->getStatusCode() == '200') {
                 return $response->getBody()->getContents();
             }
         } catch (TransferException $e) {
             return;
         }
+    }
+
+    public function getProxy()
+    {
+        $url = 'http://proxyhttp.net/free-list/anonymous-server-hide-ip-address/3';
+        $response = self::crawlerLink($url);
+
+        if ($response) {
+            $crawler = new  Crawler($response);
+            $captures = $crawler->filter('table.proxytbl tr');
+
+            if (iterator_count($captures) > 0) {
+                foreach ($captures as $capture) {
+                    $temp = new Crawler($capture);
+                    dd($temp->html());
+                }
+            }
+        }
+
+        
     }
 
 
