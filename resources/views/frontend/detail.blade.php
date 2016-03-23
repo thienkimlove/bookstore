@@ -132,7 +132,7 @@
                                             @foreach ($post->downloads as $download)
                                                 <li>
                                                     <a target="_blank" href="{{$download->link}}"
-                                                       rel="bookmark"><strong>{{($download->title) ? $download->title : $download->link}}</strong> </a>
+                                                       rel="bookmark"><strong>{{($download->title) ? $download->title.'.pdf' : $download->link}}</strong> </a>
                                                 </li>
                                             @endforeach
                                         </ul>

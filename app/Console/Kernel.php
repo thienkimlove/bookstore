@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
 
         $schedule->command('crawler:start --download=1 --key=0')
-                 ->daily();
+                 ->dailyAt('07:39');
         $schedule->command('crawler:start --download=1 --key=1')
             ->daily();
         $schedule->command('crawler:start --download=1 --key=2')
