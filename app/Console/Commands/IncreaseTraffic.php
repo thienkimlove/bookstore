@@ -40,10 +40,8 @@ class IncreaseTraffic extends Command
      */
     public function handle()
     {
-        $url = 'http://seniorphp.net';
-        $response = Main::crawlerLink($url,[ 'proxy' => '218.161.34.107:8080']);
-        dd($response);
-
-        $this->line('done');
+        $url = 'http://medicinebooklet.com';
+        $response = Main::crawlerLink($url,[ 'proxy' => '218.161.34.107:8080', 'debug' => true ]);
+        $this->line('ooke');
     }
 }

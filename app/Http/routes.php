@@ -19,12 +19,12 @@ Route::get('/', function (\Illuminate\Http\Request $request) {
 
     if ($request->input('s')) {
         $page_title = 'Search with keyword : '.$request->input('s');
-        $posts = \App\Post::latest()->where('title', 'LIKE', '%'.$request->input('s').'%')->paginate(20);
+        $posts = \App\Post::latest()->where('title', 'LIKE', '%'.$request->input('s').'%')->paginate(12);
     } else {
         $page_title = 'New Books';
-        $posts = \App\Post::latest()->limit(20)->get();
+        $posts = \App\Post::latest()->limit(12)->get();
     }
-    $randomPosts = \App\Post::all()->random(20);
+    $randomPosts = \App\Post::all()->random(12);
     return view('frontend.index', compact('posts', 'randomPosts', 'page_title'))->with([
         'meta_title' => ($request->input('s'))? 'Search with keyword : '.$request->input('s')  : 'Free Download Medical Books',
         'meta_desc' => 'download free ebook, download ebooks, download free, ebook Pathology, ebook Pathophysiology, ebook, Physiology, ebook Histology, ebook Immunology, ebook Microbiology, download ebook anatomy, ebook Biochemistry, ebook Genetics,',
